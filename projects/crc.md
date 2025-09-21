@@ -6,17 +6,26 @@
 Definition to compile the [CRC](https://github.com/crc-org/crc) project.
 
 
-### vars
+### config
 This action defines variables that will be used in all the actions
 
-```sh
-PROJHOME="~/Projects"
-CRCSOURCE="${PROJHOME}/crc-org/crc"
-CRCLOCAL=$(eval echo "${CRCSOURCE}")
-CRCDEVENV="gofedora"
-```
 
-### shared
+```ini
+[compile]
+    repo="https://github.com/crc-org/crc"
+    repo_path="Projects/crc-org/crc"
+    out_path="Projects/crc-org/crc/out"
+    out_dest="${HOME}"
+    flatten=0
+
+[machine]
+    name="crcbuild"
+    from="golang"
+
+[devenv]
+    name="crcbuild"
+    from="gofedora"
+```
 
 ---
 
@@ -24,25 +33,25 @@ Local source interaction.
 
 ### exists-source
 ```sh
-[ -d ${CRCLOCAL} ]
+[ -d ${COMPILE_REPO_PATH} ]
 ```
 
 ### remove-source
 ```sh
-rm -rf ${CRCLOCAL}
+rm -rf ${COMPILE_REPO_PATH}
 ```
 
 ### reset-source
 ```sh
-cd ${CRCLOCAL}
+cd ${COMPILE_REPO_PATH}
 git reset --hard
 cd -
 ```
 
 ### checkout-source
 ```sh
-mkdir -p ${CRCLOCAL}
-git clone https://github.com/crc-org/crc ${CRCLOCAL}
+mkdir -p ${COMPILE_REPO_PATH}
+git clone ${COMPILE_REPO} ${COMPILE_REPO_PATH}
 ```
 
 ### cd
@@ -53,7 +62,7 @@ if ! action ${FILENAME} source exists; then
   echo "Run: 'action ${FILENAME} source checkout' first."
   return
 fi
-cd ${CRCLOCAL}
+cd ${COMPILE_REPO_PATH}
 ```
 
 ### code
@@ -62,7 +71,7 @@ if ! action ${FILENAME} source exists; then
   echo "Run: 'action ${FILENAME} source checkout' first."
   return
 fi
-code ${CRCLOCAL}
+code ${COMPILE_REPO_PATH}
 ```
 
 ---
@@ -71,22 +80,22 @@ These are actions to manage the `devenv` container that is used.
 
 ### remove-devenv
 ```sh
-devenv ${CRCDEVENV} remove
+devenv ${DEVENV_NAME} remove
 ```
 
 ### start-devenv
 ```sh
-devenv ${CRCDEVENV} noinit
+devenv ${DEVENV_NAME} from ${DEVENV_FROM}
 ```
 
 ### stop-devenv
 ```sh
-devenv ${CRCDEVENV} stop
+devenv ${DEVENV_NAME} stop
 ```
 
 ### exists-devenv
 ```sh
-devenv ${CRCDEVENV} exists
+devenv ${DEVENV_NAME} exists
 ```
 
 ---
@@ -95,24 +104,24 @@ The compilation actions will be performed inside a `devenv`-container.
 
 ### make
 ```sh
-devenv ${CRCDEVENV} usercmd "cd ${CRCSOURCE} && make"
+devenv ${DEVENV_NAME} usercmd "cd ${COMPILE_REPO_PATH} && make"
 ```
 
 ### cross-make
 ```sh
-devenv ${CRCDEVENV} usercmd "cd ${CRCSOURCE} && make cross"
+devenv ${DEVENV_NAME} usercmd "cd ${COMPILE_REPO_PATH} && make cross"
 ```
 
 ### clean-make
 ```sh
-devenv ${CRCDEVENV} usercmd "cd ${CRCSOURCE} && make clean"
+devenv ${DEVENV_NAME} usercmd "cd ${COMPILE_REPO_PATH} && make clean"
 ```
 
 ### local-make
 Temporary solution to run make locally on the host
 
 ```sh
-cd ${CRCLOCAL} && make
+cd ${COMPILE_REPO_PATH} && make
 ```
 
 ---
