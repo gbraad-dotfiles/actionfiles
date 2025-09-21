@@ -9,11 +9,10 @@ Definition to compile the [CRC](https://github.com/crc-org/crc) project.
 ### config
 This action defines variables that will be used in all the actions
 
-
 ```ini
 [compile]
     repo="https://github.com/crc-org/crc"
-    repo_path="Projects/crc-org/crc"
+    repo_path="~/Projects/crc-org/crc"
     out_path="Projects/crc-org/crc/out"
     out_dest="${HOME}"
     flatten=0
@@ -27,31 +26,36 @@ This action defines variables that will be used in all the actions
     from="gofedora"
 ```
 
+### vars
+```sh
+COMPILE_REPO_LOCAL=$(eval echo "${COMPILE_REPO_PATH}")
+```
+
 ---
 
 Local source interaction.
 
 ### exists-source
 ```sh
-[ -d ${COMPILE_REPO_PATH} ]
+[ -d ${COMPILE_REPO_LOCAL} ]
 ```
 
 ### remove-source
 ```sh
-rm -rf ${COMPILE_REPO_PATH}
+rm -rf ${COMPILE_REPO_LOCAL}
 ```
 
 ### reset-source
 ```sh
-cd ${COMPILE_REPO_PATH}
+cd ${COMPILE_REPO_LOCAL}
 git reset --hard
 cd -
 ```
 
 ### checkout-source
 ```sh
-mkdir -p ${COMPILE_REPO_PATH}
-git clone ${COMPILE_REPO} ${COMPILE_REPO_PATH}
+mkdir -p ${COMPILE_REPO_LOCAL}
+git clone ${COMPILE_REPO} ${COMPILE_REPO_LOCAL}
 ```
 
 ### cd
@@ -62,7 +66,7 @@ if ! action ${FILENAME} source exists; then
   echo "Run: 'action ${FILENAME} source checkout' first."
   return
 fi
-cd ${COMPILE_REPO_PATH}
+cd ${COMPILE_REPO_LOCAL}
 ```
 
 ### code
@@ -71,7 +75,7 @@ if ! action ${FILENAME} source exists; then
   echo "Run: 'action ${FILENAME} source checkout' first."
   return
 fi
-code ${COMPILE_REPO_PATH}
+code ${COMPILE_REPO_LOCAL}
 ```
 
 ---
