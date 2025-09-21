@@ -1,4 +1,4 @@
-Actionfiles
-===========
+Gerard Braad's Actionfiles
+==========================
 
-@[gbraad](http://github.com/gbraad)'s [Actionfiles](https://github.com/actionfile/) used to automate tasks
+Just a bunch of [Actionfiles](https://github.com/actionfile/) used to automate tasks
