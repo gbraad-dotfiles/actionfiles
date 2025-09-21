@@ -1,0 +1,79 @@
+name: test-actionfile-actions
+run-name: Test action-command with project builds
+
+on:
+  workflow_dispatch:
+    inputs:
+      runs-on:
+        description: "Target runner"
+        required: true
+        type: string
+        default: "ubuntu-latest"
+      arch:
+        description: "Target architecture (e.g., arm64, amd64)"
+        required: true
+        type: string
+        default: "amd64"
+  workflow_call:
+    inputs:
+      runs-on:
+        description: "Target runner"
+        required: true
+        type: string
+        default: "ubuntu-latest"
+      arch:
+        description: "Target architecture (e.g., arm64, amd64)"
+        required: true
+        type: string
+        default: "amd64"
+
+jobs:
+  test-project-builds:
+    runs-on: ${{ inputs.runs-on }}${{ inputs.arch == 'arm64' && '-arm' || '' }}
+
+    steps:
+      - name: Enable linger and create user session (workaround)
+        uses: gbraad-actions/blacksmith-user-session@main
+
+      - name: Allow unprivileged userns (workaround)
+        uses: gbraad-actions/warpbuild-unprivileged-userns@main
+
+      - name: Checkout source repository
+        uses: actions/checkout@v2
+
+      # This folder will be used with the container
+      - name: Create userdirs
+        run: |
+          cd ${{ github.workspace }}
+          mkdir -p Projects
+          ln -s ${{ github.workspace }}/Projects  ${HOME}/Projects
+
+      - name: Setup environment
+        uses: gbraad-dotfiles/install-action@main
+        with:
+          upstream: true
+
+      - name: Run action command - checkout projects/crc
+        uses: gbraad-dotfiles/actionfile-action@main
+        with:
+          file: projects/crc.md
+          action: source checkout
+
+      - name: Run action command - checkout projects/macadam
+        uses: gbraad-dotfiles/actionfile-action@main
+        with:
+          file: projects/macadam.md
+          action: source checkout
+
+      # separate checkout and compile due to docker permissions
+      - name: Run action command - compile projects/crc
+        uses: gbraad-dotfiles/actionfile-action@main
+        with:
+          file: projects/crc.md
+          action: compile
+
+      - name: Run action command - compile projects/macadam
+        uses: gbraad-dotfiles/actionfile-action@main
+        with:
+          file: projects/macadam.md
+          action: compile
