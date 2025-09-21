@@ -15,6 +15,7 @@ jobs:
     with:
       runs-on: "ubuntu-latest"
       arch: amd64
+      out-name: "crc"
       actionfile: "projects/crc.md"
     secrets: inherit
 
@@ -24,6 +25,7 @@ jobs:
     with:
       runs-on: "ubuntu-latest"
       arch: amd64
+      out-name: "macadam"
       actionfile: "projects/macadam.md"
     secrets: inherit
 
@@ -33,6 +35,7 @@ jobs:
     with:
       runs-on: "ubuntu-latest"
       arch: amd64
+      out-name: "gvproxy"
       actionfile: "projects/gvproxy.md"
     secrets: inherit
 

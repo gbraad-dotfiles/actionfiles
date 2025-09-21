@@ -18,6 +18,10 @@ on:
         description: "Actionfile to use for the compilation"
         required: true
         type: string
+      out-name:
+        description: "Name used for the uploaded artifacts"
+        required: true
+        type: string
   workflow_call:
     inputs:
       runs-on:
@@ -32,6 +36,10 @@ on:
         default: "amd64"
       actionfile:
         description: "Actionfile to use for the compilation"
+        required: true
+        type: string
+      out-name:
+        description: "Name used for the uploaded artifacts"
         required: true
         type: string
 
@@ -75,11 +83,11 @@ jobs:
           action: compile
 
       # ideally only upload 'out' after flatten
-      - name: Upload Artifact - Projects
+      - name: Upload Artifact - Projects as ${{ inputs.out-name }}
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: projects
+          name: ${{ inputs.out-name }}
           path: ${{ github.workspace }}/Projects/
           retention-days: 1
           include-hidden-files: true
