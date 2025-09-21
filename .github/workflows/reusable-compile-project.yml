@@ -1,4 +1,4 @@
-name: test-actionfile-actions
+name: test-compile-project
 run-name: Test action-command with project builds
 
 on:
@@ -14,6 +14,10 @@ on:
         required: true
         type: string
         default: "amd64"
+      actionfile:
+        description: "Actionfile to use for the compilation"
+        required: true
+        type: string
   workflow_call:
     inputs:
       runs-on:
@@ -26,9 +30,13 @@ on:
         required: true
         type: string
         default: "amd64"
+      actionfile:
+        description: "Actionfile to use for the compilation"
+        required: true
+        type: string
 
 jobs:
-  test-project-builds:
+  test-compile-project:
     runs-on: ${{ inputs.runs-on }}${{ inputs.arch == 'arm64' && '-arm' || '' }}
 
     steps:
@@ -53,27 +61,26 @@ jobs:
         with:
           upstream: true
 
-      - name: Run action command - checkout projects/crc
+      - name: Run action command - checkout
         uses: gbraad-dotfiles/actionfile-action@main
         with:
-          file: projects/crc.md
-          action: source checkout
-
-      - name: Run action command - checkout projects/macadam
-        uses: gbraad-dotfiles/actionfile-action@main
-        with:
-          file: projects/macadam.md
+          file: ${{ inputs.actionfile }}
           action: source checkout
 
       # separate checkout and compile due to docker permissions
-      - name: Run action command - compile projects/crc
+      - name: Run action command - compile
         uses: gbraad-dotfiles/actionfile-action@main
         with:
-          file: projects/crc.md
+          file: ${{ inputs.actionfile }}
           action: compile
 
-      - name: Run action command - compile projects/macadam
-        uses: gbraad-dotfiles/actionfile-action@main
+      # ideally only upload 'out' after flatten
+      - name: Upload Artifact - Projects
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
         with:
-          file: projects/macadam.md
-          action: compile
+          name: projects
+          path: ${{ github.workspace }}/Projects/
+          retention-days: 1
+          include-hidden-files: true
+

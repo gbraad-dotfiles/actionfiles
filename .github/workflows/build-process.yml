@@ -9,10 +9,30 @@ on:
 
 jobs:
 
-  run-project-builds:
-    name: Run project builds
-    uses: ./.github/workflows/reusable-test-projects.yml
+  run-compile-crc:
+    name: Compile crc
+    uses: ./.github/workflows/reusable-compile-project.yml
     with:
       runs-on: "ubuntu-latest"
       arch: amd64
+      actionfile: "projects/crc.md"
     secrets: inherit
+
+  run-compile-macadam:
+    name: Compile macadam
+    uses: ./.github/workflows/reusable-compile-project.yml
+    with:
+      runs-on: "ubuntu-latest"
+      arch: amd64
+      actionfile: "projects/macadam.md"
+    secrets: inherit
+
+  run-compile-gvproxy:
+    name: Compile gvproxy
+    uses: ./.github/workflows/reusable-compile-project.yml
+    with:
+      runs-on: "ubuntu-latest"
+      arch: amd64
+      actionfile: "projects/gvproxy.md"
+    secrets: inherit
+
