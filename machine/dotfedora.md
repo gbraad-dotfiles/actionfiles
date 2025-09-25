@@ -8,17 +8,12 @@
   from="dotfedora"
 ```
 
-### vars
+### shared
 ```sh
 if [ -z "${MACHINE_NAME}" ]; then
   MACHINE_NAME="${FILENAME##*/}"
-  MACHINE_NAME="${CONTAINER_NAME%.md}"
+  MACHINE_NAME="${MACHINE_NAME%.md}"
 fi
-```
-
-### download
-```sh
-machine ${MACHINE_FROM} download
 ```
 
 ### create

@@ -7,7 +7,7 @@
    from="gofedora"
 ```
 
-### vars
+### shared
 ```sh
 if [ -z "${CONTAINER_NAME}" ]; then
   CONTAINER_NAME="${FILENAME##*/}"
