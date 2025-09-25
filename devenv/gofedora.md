@@ -16,22 +16,22 @@ fi
 ```
 
 ### ephemeral
-```sh
+```sh evaluate
 devenv ${CONTAINER_NAME} env
 ```
 
-### user
-```sh
+### user shell
+```sh evaluate
 devenv ${CONTAINER_NAME} user
 ```
 
 ### root
-```sh
+```sh evaluate
 devenv ${CONTAINER_NAME} root
 ```
 
 ### screen
-```sh
+```sh evaluate
 devenv ${CONTAINER_NAME} screen
 ```
 

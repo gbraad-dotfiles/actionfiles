@@ -1,10 +1,10 @@
-# Fedora dotfiles (container)
+# Fedora Golang for CRC (container)
 
 ### config
 ```ini
 [container]
-   name="dotfedora"
-   from="dotfedora"
+   name=""
+   from="gofedora"
 ```
 
 ### shared
@@ -50,7 +50,7 @@ devenv ${CONTAINER_NAME} from ${CONTAINER_FROM}
 devenv ${CONTAINER_NAME} status
 ```
 
-### alias actions
+### actions alias
 ```sh
 action ${FILENAME} --list-actions | grep -vE '^(info|run|alias|vars|default|shared)$'
 ```

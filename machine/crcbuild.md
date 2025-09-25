@@ -1,11 +1,11 @@
-# Fedora dotfiles (virual machine)
+# Fedora Golang for CRC (virual machine)
 
 
 ### config
 ```ini
 [machine]
   name=""
-  from="dotfedora"
+  from="golang"
 ```
 
 ### shared
