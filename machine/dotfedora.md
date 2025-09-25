@@ -4,14 +4,16 @@
 ### config
 ```ini
 [machine]
-  name="dotfedora"
+  name=""
   from="dotfedora"
 ```
 
 ### vars
 ```sh
-MACHINE_NAME="${FILENAME##*/}"
-MACHINE_NAME="${CONTAINER_NAME%.md}"
+if [ -z "${MACHINE_NAME}" ]; then
+  MACHINE_NAME="${FILENAME##*/}"
+  MACHINE_NAME="${CONTAINER_NAME%.md}"
+fi
 ```
 
 ### download

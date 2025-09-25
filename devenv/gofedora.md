@@ -9,8 +9,10 @@
 
 ### vars
 ```sh
-CONTAINER_NAME="${FILENAME##*/}"
-CONTAINER_NAME="${CONTAINER_NAME%.md}"
+if [ -z "${CONTAINER_NAME}" ]; then
+  CONTAINER_NAME="${FILENAME##*/}"
+  CONTAINER_NAME="${CONTAINER_NAME%.md}"
+fi
 ```
 
 ### ephemeral
