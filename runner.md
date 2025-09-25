@@ -1,4 +1,9 @@
-# Runner ralted
+# Runner related
+
+### default alias run
+```sh evaluate
+app dotrunner
+```
 
 ### `reset permissions`
 ```sh

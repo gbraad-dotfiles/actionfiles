@@ -1,13 +1,8 @@
 # Fedora golang (container)
 
-### env
+### ephemeral
 ```sh
 devenv gofedora env
-```
-
-### sys
-```sh
-devenv gofedora start
 ```
 
 ### user
@@ -25,12 +20,12 @@ devenv gofedora root
 devenv gofedora screen
 ```
 
-### rm remove
+### remove
 ```sh
 devenv gofedora rm
 ```
 
-### alias
+### default alias start
 ```sh
-app devenv/gofedora
+devenv gofedora start
 ```

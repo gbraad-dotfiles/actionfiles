@@ -1,36 +1,31 @@
 # Fedora dotfiles (container)
 
-### env
-```sh
+### ephemeral
+```sh evaluate
 devenv dotfedora env
 ```
 
-### sys
-```sh
-devenv dotfedora start
-```
-
 ### user
-```sh
+```sh evaluate
 devenv dotfedora user
 ```
 
 ### root
-```sh
+```sh evaluate
 devenv dotfedora root
 ```
 
 ### screen
-```sh
+```sh evaluate
 devenv dotfedora screen
 ```
 
-### rm remove
+### remove
 ```sh
 devenv dotfedora rm
 ```
 
-### alias
+### default alias start
 ```sh
-app devenv/dotfedora
+devenv dotfedora start
 ```
