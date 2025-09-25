@@ -5,7 +5,7 @@
   - https://github.com/spotsnel/tailscale-systemd
 
 
-### podman-install
+### run
 ```sh 
 podman run -d --name=scalesys \
     --hostname $HOSTNAME-scalesys --network=host --systemd=always \

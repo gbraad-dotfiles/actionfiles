@@ -1,57 +1,61 @@
 # Fedora dotfiles (virual machine)
 
-## 
 
-### info
+### config
+```ini
+[machine]
+  name="dotfedora"
+  from="dotfedora"
+```
 
 ### vars
 ```sh
-MACHINENAME="dotfedora"
+MACHINE_NAME="${FILENAME##*/}"
+MACHINE_NAME="${CONTAINER_NAME%.md}"
 ```
-
----
 
 ### download
 ```sh
-machine ${MACHINENAME} download
+machine ${MACHINE_FROM} download
 ```
 
 ### create
 ```sh
-machine ${MACHINENAME} create
+machine ${MACHINE_NAME} from ${MACHINE_FROM}
 ```
 
 ### exists
 ```sh
-machine ${MACHINENAME} exists
+machine ${MACHINE_NAME} exists
 ```
 
 ### start
 ```sh
-machine ${MACHINENAME} start
+machine ${MACHINE_NAME} start
 ```
 
 ### stop
 ```sh
-machine ${MACHINENAME} stop
+machine ${MACHINE_NAME} stop
 ```
 
-### rm remove
+### remove
 ```sh
-machine ${MACHINENAME} rm
+machine ${MACHINE_NAME} rm
 ```
 
-### status
+### default status
 ```sh
-machine ${MACHINENAME} status
+machine ${MACHINE_NAME} status
 ```
 
-### default alias
-```sh
-action ${FILENAME} --list-actions
-```
-
-### console ssh
+### ssh
 ```sh evaluate
-machine ${MACHINENAME} ssh
+machine ${MACHINE_NAME} ssh
 ```
+
+### alias actions
+```sh
+action ${FILENAME} --list-actions | grep -vE '^(info|run|alias|vars|default|shared)$'
+```
+

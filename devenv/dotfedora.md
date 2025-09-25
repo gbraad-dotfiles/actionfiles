@@ -1,31 +1,54 @@
 # Fedora dotfiles (container)
 
+### config
+```ini
+[container]
+   name="dotfedora"
+   from="dotfedora"
+```
+
+### vars
+```sh
+CONTAINER_NAME="${FILENAME##*/}"
+CONTAINER_NAME="${CONTAINER_NAME%.md}"
+```
+
 ### ephemeral
 ```sh evaluate
-devenv dotfedora env
+devenv ${CONTAINER_NAME} env
 ```
 
 ### user
 ```sh evaluate
-devenv dotfedora user
+devenv ${CONTAINER_NAME} user
 ```
 
 ### root
 ```sh evaluate
-devenv dotfedora root
+devenv ${CONTAINER_NAME} root
 ```
 
 ### screen
 ```sh evaluate
-devenv dotfedora screen
+devenv ${CONTAINER_NAME} screen
 ```
 
 ### remove
 ```sh
-devenv dotfedora rm
+devenv ${CONTAINER_NAME} rm
 ```
 
-### default alias start
+### start
 ```sh
-devenv dotfedora start
+devenv ${CONTAINER_NAME} from ${CONTAINER_FROM}
+```
+
+### default status
+```sh
+devenv ${CONTAINER_NAME} status
+```
+
+### alias actions
+```sh
+action ${FILENAME} --list-actions | grep -vE '^(info|run|alias|vars|default|shared)$'
 ```
