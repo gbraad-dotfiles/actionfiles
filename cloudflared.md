@@ -8,17 +8,22 @@
 ### config
 ```ini
 [container]
+  image="ghcr.io/spotsnel/cloudflared-systemd/fedora:latest"
   name="flaresys"
+  args="--network=host"
+  shell="bash"
 ```
 
 ### run
 ```sh
 podman run -d --name=${CONTAINER_NAME} \
-    --hostname $HOSTNAME-flaresys --network=host --systemd=always \
-    ghcr.io/spotsnel/cloudflared-systemd/fedora:latest
+    --hostname $HOSTNAME-${CONTAINER_NAME} \
+    --systemd=always \
+    ${CONTAINER_ARGS[@]} \
+    ${CONTAINER_IMAGE}
 ```
 
 ### shell
 ```sh evaluate
-podman exec -it ${CONTAINER_NAME} zsh
+podman exec -it ${CONTAINER_NAME} ${CONTAINER_SHELL}
 ```

@@ -7,14 +7,19 @@
 ### config
 ```ini
 [container]
+  image="ghcr.io/spotsnel/tailscale-systemd/fedora:latest"
   name="scalesys"
+  args="--network=host"
+  shell="bash"
 ```
 
 ### run
 ```sh 
 podman run -d --name=${CONTAINER_NAME} \
-    --hostname $HOSTNAME-scalesys --network=host --systemd=always \
-    ghcr.io/spotsnel/tailscale-systemd/fedora:latest
+    --hostname $HOSTNAME-${CONTAINER_NAME} \
+    --systemd=always \
+    ${CONTAINER_ARGS[@]} \
+    ${CONTAINER_IMAGE}
 ```
 
 ### login
@@ -24,6 +29,6 @@ podman exec ${CONTAINER_NAME} tailscale up -qr
 
 ### shell
 ```sh evaluate
-podman exec -it ${CONTAINER_NAME} zsh
+podman exec -it ${CONTAINER_NAME} ${CONTAINER_SHELL}
 ```
 
