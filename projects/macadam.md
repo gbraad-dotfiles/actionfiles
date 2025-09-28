@@ -6,18 +6,30 @@
 Definition to compile the [Macadam](https://github.com/crc-org/macadam) library.
 
 
-### vars
+### config
 This action defines variables that will be used in all the actions
 
-```sh
-PROJHOME="~/Projects"
-MCDREPO="https://github.com/crc-org/macadam"
-MCDSOURCE="${PROJHOME}/crc-org/macadam"
-MCDLOCAL=$(eval echo "${MCDSOURCE}")
-MCDDEVENV="gofedora"
+```ini
+[compile]
+    repo="https://github.com/crc-org/macadam"
+    repo_path="~/Projects/crc-org/macadam"
+    out_path="Projects/crc-org/macadam/out"
+    out_dest="${HOME}"
+    flatten=0
+
+[machine]
+    name="gobuild"
+    from="golang"
+
+[devenv]
+    name="gobuild"
+    from="gofedora"
 ```
 
-### shared
+### vars
+```sh
+COMPILE_REPO_LOCAL=$(eval echo "${COMPILE_REPO_PATH}")
+```
 
 ---
 
@@ -25,36 +37,25 @@ Local source interaction.
 
 ### exists-source
 ```sh
-[ -d ${MCDLOCAL} ]
+[ -d ${COMPILE_REPO_LOCAL} ]
 ```
 
 ### remove-source
 ```sh
-rm -rf ${MCDLOCAL}
+rm -rf ${COMPILE_REPO_LOCAL}
 ```
 
 ### reset-source
 ```sh
-cd ${MCDLOCAL}
+cd ${COMPILE_REPO_LOCAL}
 git reset --hard
 cd -
 ```
 
 ### checkout-source
 ```sh
-mkdir -p ${MCDLOCAL}
-git clone ${MCDREPO} ${MCDLOCAL}
-```
-
-### cp
-This action copies the macadam binary to the user's local bin folder.
-```sh
-cp ${MCDLOCAL}/bin/macadam-linux-amd64 ${LOCALBIN}/macadam
-```
-
-### rm
-```sh
-rm -f ${LOCALBIN}/macadam
+mkdir -p ${COMPILE_REPO_LOCAL}
+git clone ${COMPILE_REPO} ${COMPILE_REPO_LOCAL}
 ```
 
 ### cd
@@ -65,7 +66,7 @@ if ! action ${FILENAME} source exists; then
   echo "Run: 'action ${FILENAME} source checkout' first."
   return
 fi
-cd ${MCDLOCAL}
+cd ${COMPILE_REPO_LOCAL}
 ```
 
 ### code
@@ -74,7 +75,7 @@ if ! action ${FILENAME} source exists; then
   echo "Run: 'action ${FILENAME} source checkout' first."
   return
 fi
-code ${MCDLOCAL}
+code ${COMPILE_REPO_LOCAL}
 ```
 
 ---
@@ -83,22 +84,22 @@ These are actions to manage the `devenv` container that is used.
 
 ### remove-devenv
 ```sh
-devenv ${MCDDEVENV} remove
+devenv ${DEVENV_NAME} remove
 ```
 
 ### start-devenv
 ```sh
-devenv ${MCDDEVENV} noinit
+devenv ${DEVENV_NAME} from ${DEVENV_FROM}
 ```
 
 ### stop-devenv
 ```sh
-devenv ${MCDDEVENV} stop
+devenv ${DEVENV_NAME} stop
 ```
 
 ### exists-devenv
 ```sh
-devenv ${MCDDEVENV} exists
+devenv ${DEVENV_NAME} exists
 ```
 
 ---
@@ -107,24 +108,24 @@ The compilation actions will be performed inside a `devenv`-container.
 
 ### make
 ```sh
-devenv ${MCDDEVENV} usercmd "cd ${MCDSOURCE} && make"
+devenv ${DEVENV_NAME} usercmd "cd ${COMPILE_REPO_PATH} && make"
 ```
 
 ### cross-make
 ```sh
-devenv ${MCDDEVENV} usercmd "cd ${MCDSOURCE} && make cross"
+devenv ${DEVENV_NAME} usercmd "cd ${COMPILE_REPO_PATH} && make cross"
 ```
 
 ### clean-make
 ```sh
-devenv ${MCDDEVENV} usercmd "cd ${MCDSOURCE} && make clean"
+devenv ${DEVENV_NAME} usercmd "cd ${COMPILE_REPO_PATH} && make clean"
 ```
 
 ### local-make
 Temporary solution to run make locally on the host
 
 ```sh
-cd ${MCDLOCAL} && make
+cd ${COMPILE_REPO_PATH} && make
 ```
 
 ---
