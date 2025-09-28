@@ -7,6 +7,6 @@ app dotrunner
 
 ### `reset permissions`
 ```sh
-sudo chown runner ~/work/upstream/upstream/Projects/* -R
+sudo chown runner ~/work/* -R
 ```
 

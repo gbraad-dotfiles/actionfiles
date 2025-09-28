@@ -14,7 +14,7 @@ This action defines variables that will be used in all the actions
 [compile]
     repo="https://github.com/containers/gvisor-tap-vsock"
     repo_path="~/Projects/containers/gvisor-tap-vsock"
-    out_path="Projects/containers/gvisor-tap-vsock/out"
+    out_path="Projects/containers/gvisor-tap-vsock/bin"
     out_dest="${HOME}/Uploads/gvproxy"
     flatten=0
 

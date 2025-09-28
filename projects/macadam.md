@@ -13,7 +13,7 @@ This action defines variables that will be used in all the actions
 [compile]
     repo="https://github.com/crc-org/macadam"
     repo_path="~/Projects/crc-org/macadam"
-    out_path="Projects/crc-org/macadam/out"
+    out_path="Projects/crc-org/macadam/bin"
     out_dest="${HOME}/Uploads/macadam"
     flatten=1
 
