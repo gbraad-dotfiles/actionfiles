@@ -15,7 +15,7 @@ This action defines variables that will be used in all the actions
     repo="https://github.com/containers/gvisor-tap-vsock"
     repo_path="~/Projects/containers/gvisor-tap-vsock"
     out_path="Projects/containers/gvisor-tap-vsock/out"
-    out_dest="${HOME}"
+    out_dest="${HOME}/Uploads/gvproxy"
     flatten=0
 
 [machine]
@@ -131,6 +131,14 @@ cd ${COMPILE_REPO_PATH} && make
 
 ---
 
+### out-cp
+```sh
+mkdir -p ${COMPILE_OUT_DEST}
+cp -r ${COMPILE_OUT_PATH} ${COMPILE_OUT_DEST}
+```
+
+---
+
 Default action is to compile. Performs the following:
 
   - checkout source if not exists
@@ -148,4 +156,5 @@ if ! action ${FILENAME} devenv exists; then
 fi
 action ${FILENAME} make clean
 action ${FILENAME} make
+action ${FILENAME} cp out
 ```

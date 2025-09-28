@@ -63,6 +63,8 @@ jobs:
           cd ${{ github.workspace }}
           mkdir -p Projects
           ln -s ${{ github.workspace }}/Projects  ${HOME}/Projects
+          mkdir -p Uploads
+          ln -s ${{ github.workspace }}/Uploads  ${HOME}/Uploads
 
       - name: Setup environment
         uses: gbraad-dotfiles/install-action@main
@@ -83,12 +85,12 @@ jobs:
           action: compile
 
       # ideally only upload 'out' after flatten
-      - name: Upload Artifact - Projects as ${{ inputs.out-name }}
+      - name: Upload Artifact - Uploads as ${{ inputs.out-name }}
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
           name: ${{ inputs.out-name }}
-          path: ${{ github.workspace }}/Projects/
+          path: ${{ github.workspace }}/Uploads/
           retention-days: 1
           include-hidden-files: true
 

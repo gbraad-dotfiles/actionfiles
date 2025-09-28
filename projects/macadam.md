@@ -14,8 +14,8 @@ This action defines variables that will be used in all the actions
     repo="https://github.com/crc-org/macadam"
     repo_path="~/Projects/crc-org/macadam"
     out_path="Projects/crc-org/macadam/out"
-    out_dest="${HOME}"
-    flatten=0
+    out_dest="${HOME}/Uploads/macadam"
+    flatten=1
 
 [machine]
     name="gobuild"
@@ -130,6 +130,14 @@ cd ${COMPILE_REPO_PATH} && make
 
 ---
 
+### out-cp
+```sh
+mkdir -p ${COMPILE_OUT_DEST}
+cp -r ${COMPILE_OUT_PATH} ${COMPILE_OUT_DEST}
+```
+
+---
+
 Default action is to compile. Performs the following:
 
   - checkout source if not exists
@@ -147,4 +155,5 @@ if ! action ${FILENAME} devenv exists; then
 fi
 action ${FILENAME} make clean
 action ${FILENAME} make
+action ${FILENAME} cp out
 ```
