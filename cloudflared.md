@@ -5,7 +5,7 @@
   - https://github.com/spotsnel/cloudflared-systemd/
 
 
-### rumn
+### run
 ```sh
 podman run -d --name=flaresys \
     --hostname $HOSTNAME-flaresys --network=host --systemd=always \
