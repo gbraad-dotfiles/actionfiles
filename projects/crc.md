@@ -133,7 +133,7 @@ cd ${COMPILE_REPO_PATH} && make
 ### out-cp
 ```sh
 mkdir -p ${COMPILE_OUT_DEST}
-cp -r ${COMPILE_OUT_PATH} ${COMPILE_OUT_DEST}
+cp -r ${COMPILE_OUT_PATH}/* ${COMPILE_OUT_DEST}
 ```
 
 ---

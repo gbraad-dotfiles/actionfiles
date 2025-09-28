@@ -133,7 +133,7 @@ cd ${COMPILE_REPO_PATH} && make
 ### out-cp
 ```sh
 mkdir -p ${COMPILE_OUT_DEST}
-cp -r ${COMPILE_OUT_PATH} ${COMPILE_OUT_DEST}
+cp -r ${COMPILE_OUT_PATH}/* ${COMPILE_OUT_DEST}
 ```
 
 ---
@@ -154,6 +154,6 @@ if ! action ${FILENAME} devenv exists; then
   action ${FILENAME} devenv start
 fi
 action ${FILENAME} make clean
-action ${FILENAME} make
+action ${FILENAME} make cross
 action ${FILENAME} cp out
 ```
